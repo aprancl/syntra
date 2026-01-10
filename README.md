@@ -1,0 +1,2 @@
+# syntra
+AI flash cards
