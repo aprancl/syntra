@@ -3,8 +3,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 // Initialize Google Generative AI client
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "");
 
-// Model configuration - using Gemini 1.5 Flash (free tier)
-export const AI_MODEL = "gemini-1.5-flash";
+// Model configuration - using Gemini 2.0 Flash (free tier)
+export const AI_MODEL = "gemini-2.0-flash";
 
 export interface GenerateFlashcardsResult {
   content: string;

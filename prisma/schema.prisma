@@ -54,7 +54,7 @@ model Deck {
 
   // AI Generation Tracking
   promptUsed      String   @db.Text // Exact prompt sent to Claude
-  modelUsed       String   @default("gemini-1.5-flash")
+  modelUsed       String   @default("gemini-2.0-flash")
   generationCost  Float?   // Track costs for analytics
 
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
