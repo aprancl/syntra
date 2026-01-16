@@ -8,7 +8,7 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-// Phase 0: User model for Clerk authentication sync
+// User model for Clerk authentication sync
 model User {
   id        String   @id @default(cuid())
   clerkId   String   @unique
@@ -16,6 +16,82 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  decks Deck[]
+
   @@index([clerkId])
   @@index([email])
+}
+
+// Deck types for flashcard generation
+enum DeckType {
+  WORDS
+  PHRASES
+  SENTENCE_FRAGMENTS
+}
+
+// Deck model - a collection of flashcards
+model Deck {
+  id              String   @id @default(cuid())
+  userId          String
+  name            String   // User-editable, default: "Spanish → English (Phrases)"
+
+  // Language Configuration
+  sourceLanguage  String   // e.g., "Spanish"
+  targetLanguage  String   // e.g., "English"
+
+  // Deck Type
+  deckType        DeckType
+
+  // Generation Settings (stored for reproducibility)
+  proficiencyLevel String  @default("Intermediate")
+  topicContext     String? // Optional theme
+  formalityLevel   String  @default("Neutral")
+
+  // Metadata
+  cardCount       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // AI Generation Tracking
+  promptUsed      String   @db.Text // Exact prompt sent to Claude
+  modelUsed       String   @default("gemini-1.5-flash")
+  generationCost  Float?   // Track costs for analytics
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cards           Card[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([deckType])
+}
+
+// Card model - individual flashcard
+model Card {
+  id          String   @id @default(cuid())
+  deckId      String
+
+  // Card Content
+  front       String   @db.Text // Source language content
+  back        String   @db.Text // Target language translation
+
+  // AI-Generated Context
+  explanation String?  @db.Text // Grammar notes, usage tips
+  example     String?  @db.Text // Example sentence/dialogue
+
+  // Ordering
+  orderIndex  Int      // Maintain card order in deck
+
+  // Spaced Repetition Data (for future SRS feature - Phase 5)
+  easeFactor  Float    @default(2.5)
+  interval    Int      @default(0)      // Days until next review
+  repetitions Int      @default(0)      // Number of successful reviews
+  nextReview  DateTime @default(now())
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  deck        Deck     @relation(fields: [deckId], references: [id], onDelete: Cascade)
+
+  @@index([deckId])
+  @@index([nextReview])
 }
