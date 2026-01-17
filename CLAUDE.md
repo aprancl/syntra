@@ -102,7 +102,7 @@ The `protectedProcedure` in `src/server/api/trpc.ts` handles Clerk → Database 
 
 - `(auth)/*` - Public auth pages (sign-in, sign-up) using Clerk components
 - `(protected)/*` - Authenticated routes; layout enforces auth via `auth()` check
-- Public routes defined in `middleware.ts` via `createRouteMatcher`
+- Public routes defined in `src/middleware.ts` via `createRouteMatcher`
 
 ### tRPC Procedures
 
@@ -147,6 +147,7 @@ Edit `src/server/ai.ts` - change `AI_MODEL` constant
 3. Update prompt templates in `src/lib/prompt-builder.ts`
 4. Update Prisma schema if storing new field
 
-## Reference: Full PRD
+## Documentation
 
-See `plan.md` for the complete Product Requirements Document with all feature specs, data models, and future phases.
+- `docs/PRD.md` - Complete Product Requirements Document with all feature specs, data models, and future phases
+- `docs/UI_REDESIGN.md` - UI redesign plan with warm orange/white glassmorphism theme

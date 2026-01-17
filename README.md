@@ -86,6 +86,9 @@ Visit [http://localhost:3000](http://localhost:3000)
 
 ```
 syntra/
+├── docs/
+│   ├── PRD.md                  # Product Requirements Document
+│   └── UI_REDESIGN.md          # UI redesign specifications
 ├── prisma/
 │   └── schema.prisma           # Database schema (User, Deck, Card)
 ├── src/
@@ -96,6 +99,7 @@ syntra/
 │   │   │   ├── generate/       # Flashcard generation form
 │   │   │   └── deck/[deckId]/  # Deck viewer
 │   │   ├── api/trpc/           # tRPC API handler
+│   │   ├── globals.css         # Design system & theme
 │   │   ├── layout.tsx          # Root layout
 │   │   └── page.tsx            # Landing page
 │   ├── components/
@@ -107,12 +111,12 @@ syntra/
 │   │   ├── flashcard-parser.ts # AI response parsing
 │   │   ├── validations.ts      # Zod schemas
 │   │   └── utils.ts            # Utility functions
+│   ├── middleware.ts           # Clerk auth middleware
 │   └── server/
 │       ├── api/                # tRPC routers
 │       ├── ai.ts               # Groq/Llama integration
 │       └── db.ts               # Prisma client
 ├── .env.example                # Environment template
-├── middleware.ts               # Clerk auth middleware
 ├── CLAUDE.md                   # Claude Code guidance
 └── package.json
 ```
