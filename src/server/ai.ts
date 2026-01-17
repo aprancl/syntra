@@ -1,10 +1,12 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 
-// Initialize Google Generative AI client
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "");
+// Initialize Groq client
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY || "",
+});
 
-// Model configuration - using Gemini 2.0 Flash (free tier)
-export const AI_MODEL = "gemini-2.0-flash";
+// Model configuration - using Llama 3.3 70B on Groq (free tier)
+export const AI_MODEL = "llama-3.3-70b-versatile";
 
 export interface GenerateFlashcardsResult {
   content: string;
@@ -14,14 +16,20 @@ export interface GenerateFlashcardsResult {
 export async function generateFlashcards(
   prompt: string
 ): Promise<GenerateFlashcardsResult> {
-  const model = genAI.getGenerativeModel({ model: AI_MODEL });
+  const completion = await groq.chat.completions.create({
+    messages: [
+      {
+        role: "user",
+        content: prompt,
+      },
+    ],
+    model: AI_MODEL,
+  });
 
-  const result = await model.generateContent(prompt);
-  const response = result.response;
-  const text = response.text();
+  const text = completion.choices[0]?.message?.content;
 
   if (!text) {
-    throw new Error("No text content in Gemini response");
+    throw new Error("No text content in Groq response");
   }
 
   return {
