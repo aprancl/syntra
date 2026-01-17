@@ -3,11 +3,19 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================
+   SYNTRA UI REDESIGN - Design System Foundation
+   Orange/White theme with glassmorphism
+   ============================================ */
+
 @theme inline {
+  /* Color mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Sidebar colors */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -16,11 +24,15 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
+  /* Chart colors */
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+
+  /* Core semantic colors */
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -37,95 +49,572 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Brand colors */
+  --color-syntra: var(--syntra);
+  --color-syntra-light: var(--syntra-light);
+  --color-syntra-dark: var(--syntra-dark);
+
+  /* Updated Border Radius Scale - Softer, more rounded */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 40px;
+  --radius-4xl: 48px;
+  --radius-full: 9999px;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Base radius for calculations */
+  --radius: 12px;
+
+  /* ============================================
+     PRIMARY COLORS - Syntra Orange Palette
+     ============================================ */
+  --syntra: oklch(0.7 0.2 35); /* #FF6B35 - Primary brand orange */
+  --syntra-light: oklch(0.75 0.18 45); /* #FF8C42 - Hover states */
+  --syntra-dark: oklch(0.6 0.22 30); /* Darker orange for contrast */
+  --syntra-muted: oklch(0.82 0.14 55); /* #FFB366 - Light peach */
+  --syntra-soft: oklch(0.8 0.12 40); /* #FF9E80 - Soft coral */
+
+  /* ============================================
+     BACKGROUND COLORS - Warm White Palette
+     ============================================ */
+  --background: oklch(0.995 0.005 70); /* #FFFAF5 - Warm white */
+  --foreground: oklch(0.22 0.01 60); /* #2D2D2D - Charcoal */
+
+  /* Card backgrounds with warmth */
+  --card: oklch(1 0 0 / 80%); /* White with transparency for glass */
+  --card-foreground: oklch(0.22 0.01 60); /* Charcoal */
+
+  /* Popover backgrounds */
+  --popover: oklch(1 0 0 / 95%); /* Near white, slight transparency */
+  --popover-foreground: oklch(0.22 0.01 60);
+
+  /* ============================================
+     SEMANTIC COLORS - Orange-based
+     ============================================ */
+  /* Primary - Syntra Orange */
+  --primary: oklch(0.7 0.2 35); /* Syntra Orange */
+  --primary-foreground: oklch(1 0 0); /* White text on orange */
+
+  /* Secondary - Light orange tint */
+  --secondary: oklch(0.96 0.03 60); /* #FFF0E6 - Light orange tint */
+  --secondary-foreground: oklch(0.6 0.18 35); /* Dark orange text */
+
+  /* Muted - Cream tones */
+  --muted: oklch(0.97 0.02 70); /* #FFF5EB - Cream */
+  --muted-foreground: oklch(0.55 0.01 60); /* #7A7A7A - Medium gray */
+
+  /* Accent - Orange highlights */
+  --accent: oklch(0.96 0.03 60); /* Light orange tint */
+  --accent-foreground: oklch(0.6 0.18 35);
+
+  /* Destructive - Warmer red */
+  --destructive: oklch(0.62 0.2 25); /* #EF5350 - Error red */
+
+  /* ============================================
+     UI ELEMENT COLORS
+     ============================================ */
+  --border: oklch(0.7 0.2 35 / 15%); /* Orange-tinted border */
+  --input: oklch(0.92 0.01 70); /* Warm input background */
+  --ring: oklch(0.7 0.2 35); /* Orange focus ring */
+
+  /* ============================================
+     ACCENT/STATUS COLORS
+     ============================================ */
+  --success: oklch(0.65 0.15 145); /* #4CAF50 - Success green */
+  --warning: oklch(0.8 0.17 85); /* #FFB300 - Warning amber */
+  --info: oklch(0.68 0.14 250); /* #42A5F5 - Info blue */
+
+  /* ============================================
+     CHART COLORS - Warm palette
+     ============================================ */
+  --chart-1: oklch(0.7 0.2 35); /* Syntra Orange */
+  --chart-2: oklch(0.75 0.18 45); /* Warm Orange */
+  --chart-3: oklch(0.82 0.14 55); /* Light Peach */
+  --chart-4: oklch(0.68 0.14 250); /* Info Blue */
+  --chart-5: oklch(0.65 0.15 145); /* Success Green */
+
+  /* ============================================
+     SIDEBAR COLORS
+     ============================================ */
+  --sidebar: oklch(0.995 0.005 70); /* Warm white */
+  --sidebar-foreground: oklch(0.22 0.01 60);
+  --sidebar-primary: oklch(0.7 0.2 35); /* Syntra Orange */
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.03 60);
+  --sidebar-accent-foreground: oklch(0.6 0.18 35);
+  --sidebar-border: oklch(0.7 0.2 35 / 10%);
+  --sidebar-ring: oklch(0.7 0.2 35);
+
+  /* ============================================
+     GRADIENT DEFINITIONS
+     ============================================ */
+  --gradient-primary: linear-gradient(
+    135deg,
+    oklch(0.7 0.2 35) 0%,
+    oklch(0.75 0.18 45) 50%,
+    oklch(0.82 0.14 55) 100%
+  );
+  --gradient-warm: linear-gradient(
+    180deg,
+    oklch(0.995 0.005 70) 0%,
+    oklch(0.97 0.02 70) 50%,
+    oklch(0.96 0.03 60) 100%
+  );
+  --gradient-sunrise: linear-gradient(
+    135deg,
+    oklch(0.8 0.12 40) 0%,
+    oklch(0.82 0.14 55) 50%,
+    oklch(0.88 0.1 65) 100%
+  );
+  --gradient-glass: linear-gradient(
+    135deg,
+    oklch(1 0 0 / 90%) 0%,
+    oklch(1 0 0 / 70%) 100%
+  );
+  --gradient-glow: radial-gradient(
+    circle at center,
+    oklch(0.7 0.2 35 / 15%) 0%,
+    transparent 70%
+  );
+
+  /* ============================================
+     SHADOW SYSTEM - Orange-tinted warmth
+     ============================================ */
+  --shadow-sm: 0 1px 2px oklch(0.7 0.2 35 / 4%), 0 1px 3px oklch(0 0 0 / 6%);
+  --shadow-md: 0 4px 6px oklch(0.7 0.2 35 / 6%), 0 2px 4px oklch(0 0 0 / 4%);
+  --shadow-lg:
+    0 10px 25px oklch(0.7 0.2 35 / 10%), 0 4px 10px oklch(0 0 0 / 5%);
+  --shadow-xl:
+    0 20px 40px oklch(0.7 0.2 35 / 12%), 0 8px 16px oklch(0 0 0 / 6%);
+  --shadow-glow:
+    0 0 30px oklch(0.7 0.2 35 / 20%), 0 0 60px oklch(0.7 0.2 35 / 10%);
+  --shadow-button: 0 4px 14px oklch(0.7 0.2 35 / 25%);
+  --shadow-button-hover: 0 6px 20px oklch(0.7 0.2 35 / 35%);
+  --shadow-inset: inset 0 2px 4px oklch(0 0 0 / 6%);
+
+  /* ============================================
+     TRANSITION TIMINGS
+     ============================================ */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+  --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ============================================
+   DARK MODE - Warm dark theme
+   ============================================ */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: oklch(0.15 0.01 60); /* Dark charcoal */
+  --foreground: oklch(0.98 0.005 70); /* Warm white */
+
+  --card: oklch(0.2 0.01 60 / 80%); /* Dark with transparency */
+  --card-foreground: oklch(0.98 0.005 70);
+
+  --popover: oklch(0.2 0.01 60 / 95%);
+  --popover-foreground: oklch(0.98 0.005 70);
+
+  /* Primary stays orange but slightly adjusted */
+  --primary: oklch(0.72 0.18 35); /* Slightly lighter orange */
+  --primary-foreground: oklch(0.15 0.01 60);
+
+  --secondary: oklch(0.25 0.02 50);
+  --secondary-foreground: oklch(0.98 0.005 70);
+
+  --muted: oklch(0.25 0.01 60);
+  --muted-foreground: oklch(0.65 0.01 60);
+
+  --accent: oklch(0.25 0.02 50);
+  --accent-foreground: oklch(0.98 0.005 70);
+
+  --destructive: oklch(0.65 0.2 25);
+
+  --border: oklch(0.72 0.18 35 / 15%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.72 0.18 35);
+
+  /* Dark mode charts */
+  --chart-1: oklch(0.72 0.18 35);
+  --chart-2: oklch(0.75 0.16 45);
+  --chart-3: oklch(0.8 0.12 55);
+  --chart-4: oklch(0.7 0.14 250);
+  --chart-5: oklch(0.68 0.15 145);
+
+  /* Dark sidebar */
+  --sidebar: oklch(0.18 0.01 60);
+  --sidebar-foreground: oklch(0.98 0.005 70);
+  --sidebar-primary: oklch(0.72 0.18 35);
+  --sidebar-primary-foreground: oklch(0.15 0.01 60);
+  --sidebar-accent: oklch(0.25 0.02 50);
+  --sidebar-accent-foreground: oklch(0.98 0.005 70);
+  --sidebar-border: oklch(0.72 0.18 35 / 10%);
+  --sidebar-ring: oklch(0.72 0.18 35);
+
+  /* Dark mode gradients */
+  --gradient-glass: linear-gradient(
+    135deg,
+    oklch(0.2 0.01 60 / 80%) 0%,
+    oklch(0.2 0.01 60 / 60%) 100%
+  );
+  --gradient-glow: radial-gradient(
+    circle at center,
+    oklch(0.72 0.18 35 / 20%) 0%,
+    transparent 70%
+  );
+
+  /* Dark mode shadows */
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 20%), 0 1px 3px oklch(0 0 0 / 30%);
+  --shadow-md: 0 4px 6px oklch(0 0 0 / 25%), 0 2px 4px oklch(0 0 0 / 20%);
+  --shadow-lg: 0 10px 25px oklch(0 0 0 / 30%), 0 4px 10px oklch(0 0 0 / 25%);
+  --shadow-xl: 0 20px 40px oklch(0 0 0 / 35%), 0 8px 16px oklch(0 0 0 / 30%);
 }
 
+/* ============================================
+   BASE STYLES
+   ============================================ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    background-image: var(--gradient-warm);
+    background-attachment: fixed;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: oklch(0.7 0.2 35 / 20%);
+    color: oklch(0.22 0.01 60);
   }
 }
 
+/* ============================================
+   COMPONENT UTILITIES
+   ============================================ */
 @layer components {
   .container {
     @apply mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* ============================================
+   GLASSMORPHISM UTILITIES
+   ============================================ */
+@layer utilities {
+  /* Primary Glass Card */
+  .glass {
+    background: oklch(1 0 0 / 75%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid oklch(1 0 0 / 50%);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Frosted Glass - Lighter effect */
+  .glass-frosted {
+    background: oklch(1 0 0 / 60%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid oklch(1 0 0 / 40%);
+  }
+
+  /* Heavy Glass - More prominent */
+  .glass-heavy {
+    background: oklch(1 0 0 / 85%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid oklch(1 0 0 / 60%);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Orange Tinted Glass */
+  .glass-orange {
+    background: oklch(0.96 0.03 60 / 70%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid oklch(0.7 0.2 35 / 20%);
+  }
+
+  /* Navigation Glass */
+  .glass-nav {
+    background: oklch(1 0 0 / 85%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid oklch(0.7 0.2 35 / 8%);
+  }
+
+  /* Dark mode glass adjustments */
+  .dark .glass {
+    background: oklch(0.2 0.01 60 / 70%);
+    border: 1px solid oklch(0.72 0.18 35 / 15%);
+  }
+
+  .dark .glass-frosted {
+    background: oklch(0.2 0.01 60 / 50%);
+    border: 1px solid oklch(0.72 0.18 35 / 10%);
+  }
+
+  .dark .glass-heavy {
+    background: oklch(0.2 0.01 60 / 80%);
+    border: 1px solid oklch(0.72 0.18 35 / 20%);
+  }
+
+  .dark .glass-orange {
+    background: oklch(0.25 0.03 50 / 60%);
+    border: 1px solid oklch(0.72 0.18 35 / 25%);
+  }
+
+  .dark .glass-nav {
+    background: oklch(0.18 0.01 60 / 85%);
+    border-bottom: 1px solid oklch(0.72 0.18 35 / 10%);
+  }
+}
+
+/* ============================================
+   GRADIENT TEXT UTILITIES
+   ============================================ */
+@layer utilities {
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-sunrise {
+    background: var(--gradient-sunrise);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ============================================
+   SHADOW UTILITIES
+   ============================================ */
+@layer utilities {
+  .shadow-syntra-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-syntra {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-syntra-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-syntra-xl {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-button {
+    box-shadow: var(--shadow-button);
+  }
+
+  .shadow-button-hover {
+    box-shadow: var(--shadow-button-hover);
+  }
+}
+
+/* ============================================
+   ANIMATION UTILITIES
+   ============================================ */
+@layer utilities {
+  /* Hover lift effect */
+  .hover-lift {
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Button hover */
+  .hover-lift-sm {
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .hover-lift-sm:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Glow on hover */
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Scale on hover */
+  .hover-scale {
+    transition: transform var(--transition-base);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* ============================================
+   DECORATIVE ELEMENTS
+   ============================================ */
+@layer utilities {
+  /* Orange gradient orb */
+  .orb-orange {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      oklch(0.7 0.2 35 / 20%) 0%,
+      transparent 70%
+    );
+    filter: blur(40px);
+    pointer-events: none;
+  }
+
+  /* Warm glow background */
+  .bg-warm-glow {
+    background-image: var(--gradient-warm);
+  }
+
+  /* Accent bar at top of cards */
+  .accent-bar::before {
+    content: "";
+    display: block;
+    height: 4px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+/* ============================================
+   LOADING ANIMATIONS
+   ============================================ */
+@layer utilities {
+  /* Orange shimmer skeleton */
+  .skeleton-syntra {
+    background: linear-gradient(
+      90deg,
+      oklch(0.7 0.2 35 / 6%) 0%,
+      oklch(0.7 0.2 35 / 12%) 50%,
+      oklch(0.7 0.2 35 / 6%) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Spinner */
+  .spinner-syntra {
+    width: 24px;
+    height: 24px;
+    border: 3px solid oklch(0.7 0.2 35 / 20%);
+    border-top-color: oklch(0.7 0.2 35);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+@layer utilities {
+  .progress-bar {
+    height: 8px;
+    background: oklch(0.7 0.2 35 / 12%);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-full);
+    transition: width 0.4s ease;
+  }
+}
+
+/* ============================================
+   FLASHCARD FLIP ANIMATION
+   ============================================ */
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .transition-flip {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* ============================================
+   BADGE VARIANTS
+   ============================================ */
+@layer utilities {
+  .badge-words {
+    background: oklch(0.68 0.14 250 / 12%);
+    color: oklch(0.68 0.14 250);
+  }
+
+  .badge-phrases {
+    background: oklch(0.65 0.15 145 / 12%);
+    color: oklch(0.65 0.15 145);
+  }
+
+  .badge-fragments {
+    background: oklch(0.7 0.2 35 / 12%);
+    color: oklch(0.7 0.2 35);
+  }
+
+  .badge-recommended {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
   }
 }
