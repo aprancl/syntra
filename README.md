@@ -7,9 +7,9 @@ AI-powered flashcard generation platform for language learners.
 - **Next.js 16** with App Router and TypeScript
 - **Tailwind CSS** with shadcn/ui components
 - **Clerk** for authentication
-- **Prisma** with PostgreSQL
+- **Prisma** with PostgreSQL (Vercel Postgres)
 - **tRPC** for type-safe APIs
-- **Claude AI** for flashcard generation (Phase 2)
+- **Groq** with Llama 3.3 70B for flashcard generation
 
 ## Getting Started
 
@@ -51,6 +51,7 @@ DATABASE_URL="your-postgres-connection-string"
 POSTGRES_URL_NON_POOLING="your-direct-connection-string"
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
 CLERK_SECRET_KEY="sk_test_..."
+GROQ_API_KEY="your-groq-api-key"
 ```
 
 5. Push database schema:
@@ -86,34 +87,42 @@ Visit [http://localhost:3000](http://localhost:3000)
 ```
 syntra/
 ├── prisma/
-│   └── schema.prisma       # Database schema
+│   └── schema.prisma           # Database schema (User, Deck, Card)
 ├── src/
 │   ├── app/
-│   │   ├── (auth)/         # Auth pages (sign-in, sign-up)
-│   │   ├── (protected)/    # Protected routes (dashboard, generate)
-│   │   ├── api/trpc/       # tRPC API handler
-│   │   ├── layout.tsx      # Root layout
-│   │   └── page.tsx        # Landing page
+│   │   ├── (auth)/             # Auth pages (sign-in, sign-up)
+│   │   ├── (protected)/        # Protected routes
+│   │   │   ├── dashboard/      # Deck listing
+│   │   │   ├── generate/       # Flashcard generation form
+│   │   │   └── deck/[deckId]/  # Deck viewer
+│   │   ├── api/trpc/           # tRPC API handler
+│   │   ├── layout.tsx          # Root layout
+│   │   └── page.tsx            # Landing page
 │   ├── components/
-│   │   ├── layout/         # Header, Footer
-│   │   └── ui/             # shadcn/ui components
+│   │   ├── layout/             # Header, Footer
+│   │   └── ui/                 # shadcn/ui components
 │   ├── lib/
-│   │   ├── trpc/           # tRPC client and server
-│   │   └── utils.ts        # Utility functions
+│   │   ├── trpc/               # tRPC client and server
+│   │   ├── prompt-builder.ts   # AI prompt construction
+│   │   ├── flashcard-parser.ts # AI response parsing
+│   │   ├── validations.ts      # Zod schemas
+│   │   └── utils.ts            # Utility functions
 │   └── server/
-│       ├── api/            # tRPC routers
-│       └── db.ts           # Prisma client
-├── .env.example            # Environment template
-├── middleware.ts           # Clerk auth middleware
+│       ├── api/                # tRPC routers
+│       ├── ai.ts               # Groq/Llama integration
+│       └── db.ts               # Prisma client
+├── .env.example                # Environment template
+├── middleware.ts               # Clerk auth middleware
+├── CLAUDE.md                   # Claude Code guidance
 └── package.json
 ```
 
 ## Development Phases
 
-- **Phase 0** (Current): Project setup, auth, basic UI
+- **Phase 0**: Project setup, auth, basic UI
 - **Phase 1**: Complete data models, deck listing
-- **Phase 2**: AI flashcard generation with Claude
-- **Phase 3**: Deck management (CRUD)
+- **Phase 2** (Complete): AI flashcard generation with Groq/Llama
+- **Phase 3** (Next): Deck management enhancements
 - **Phase 4**: Polish and optimization
 - **Phase 5**: Study mode with spaced repetition
 
